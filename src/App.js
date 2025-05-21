@@ -41,11 +41,10 @@ function AdviceGenerator() {
 
 function AdviceContainer() {
   const screenWidth = useScreenWidth();
-  console.log(screenWidth);
 
   return (
     <section className="advice-container">
-      <p className="container-heading">advice</p>
+      <p className="container-heading">advice {}</p>
       <Advice />
 
       <img src={screenWidth > 768 ? divider2 : divider1} alt="" />

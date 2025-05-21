@@ -45,12 +45,15 @@ body {
   color: var(--green);
   text-transform: uppercase;
   font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.3rem;
   text-align: center;
 }
 
 .advice {
   font-size: 30px;
   font-weight: 800;
+  /* line-height: 0.5rem; */
   color: white;
   text-align: center;
 }
@@ -71,6 +74,10 @@ body {
   position: relative;
   top: 4rem;
   margin-top: -3rem;
+}
+
+.dice-btn:hover {
+  box-shadow: 0 0 2rem var(--green);
 }
 
 @media (min-width: 768px) {
