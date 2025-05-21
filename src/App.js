@@ -42,10 +42,37 @@ function AdviceGenerator() {
 function AdviceContainer() {
   const screenWidth = useScreenWidth();
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [advice, setAdvice] = useState("Click the dice below to get an advice");
+  const [adviceID, setAdviceID] = useState("");
+
+  useEffect(function () {
+    async function getAdvice() {
+      setIsLoading(true);
+      try {
+        const res = await fetch(`https://api.adviceslip.com/advice`);
+        if (!res.ok)
+          throw new Error("Something went wrong getting your advice");
+
+        const data = await res.json();
+
+        setIsLoading(false);
+        console.log(data);
+        setAdvice(data.slip.advice);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    getAdvice();
+  }, []);
+
   return (
     <section className="advice-container">
       <p className="container-heading">advice {}</p>
-      <Advice />
+      <Advice advice={advice} adviceID={adviceID} loading={isLoading} />
 
       <img src={screenWidth > 768 ? divider2 : divider1} alt="" />
 
@@ -56,11 +83,11 @@ function AdviceContainer() {
   );
 }
 
-function Advice() {
+function Advice({ advice, adviceID, loading }) {
   return (
     <p className="advice">
       <span>{"\u201C"}</span>
-      advice
+      {loading ? "Getting advice..." : advice}
       <span>{"\u201D"}</span>
     </p>
   );
