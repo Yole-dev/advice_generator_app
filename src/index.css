@@ -52,9 +52,8 @@ body {
 
 .advice {
   width: 100%;
-  font-size: 30px;
+  font-size: 26px;
   font-weight: 800;
-  /* line-height: 0.5rem; */
   color: white;
   text-align: center;
 }
@@ -85,5 +84,9 @@ body {
   .advice-container {
     width: 40%;
     justify-self: center;
+  }
+
+  .advice {
+    font-size: 28px;
   }
 }

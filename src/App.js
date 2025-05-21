@@ -43,16 +43,17 @@ function AdviceContainer() {
   const screenWidth = useScreenWidth();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const [advice, setAdvice] = useState("Click the dice below to get an advice");
   const [adviceID, setAdviceID] = useState("");
 
-  const [fetchAdvice, setFetchAdvice] = useState(false);
+  const [fetchTrigger, setFetchTrigger] = useState(false);
 
   useEffect(
     function () {
       async function getAdvice() {
         setIsLoading(true);
+        setError(null);
         try {
           const res = await fetch(`https://api.adviceslip.com/advice`);
           if (!res.ok)
@@ -63,29 +64,31 @@ function AdviceContainer() {
           setIsLoading(false);
 
           setAdvice(data.slip.advice);
-          setAdviceID(data.slip.id);
+          setAdviceID(`#${data.slip.id}`);
         } catch (err) {
-          setError(err.message);
+          if (err) {
+            setError(err.message);
+          }
         } finally {
           setIsLoading(false);
         }
       }
       getAdvice();
     },
-    [fetchAdvice]
+    [fetchTrigger]
   );
 
   function handleFetchAdvice() {
     setAdvice("");
-    setFetchAdvice(!fetchAdvice);
-
-    console.log("fetching data");
+    setAdviceID("");
+    setError(null);
+    setFetchTrigger(!fetchTrigger);
   }
 
   return (
     <section className="advice-container">
-      <p className="container-heading">advice #{adviceID}</p>
-      <Advice advice={advice} loading={isLoading} errorMessage={error} />
+      <p className="container-heading">advice {adviceID}</p>
+      <Advice advice={advice} loading={isLoading} error={error} />
 
       <img src={screenWidth > 768 ? divider2 : divider1} alt="" />
 
@@ -96,15 +99,14 @@ function AdviceContainer() {
   );
 }
 
-function Advice({ advice, loading, errorMessage }) {
+function Advice({ advice, loading, error }) {
   return (
     <p className="advice">
       <span>{"\u201C"}</span>
+
       {loading && "Getting advice..."}
 
       {!loading && advice}
-
-      {errorMessage ? errorMessage : advice}
       <span>{"\u201D"}</span>
     </p>
   );
