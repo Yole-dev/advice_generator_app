@@ -17,20 +17,20 @@
 
 body {
   width: 100svw;
-  height: 100svh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-family: "Manrope", sans-serif;
   background: var(--blue-950);
 }
 
 .app-container {
-  width: 90svw;
+  width: 100svw;
+  height: 100svh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .advice-container {
-  width: 100%;
+  width: 90%;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -51,6 +51,7 @@ body {
 }
 
 .advice {
+  width: 100%;
   font-size: 30px;
   font-weight: 800;
   /* line-height: 0.5rem; */

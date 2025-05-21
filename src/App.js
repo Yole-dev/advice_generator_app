@@ -47,47 +47,64 @@ function AdviceContainer() {
   const [advice, setAdvice] = useState("Click the dice below to get an advice");
   const [adviceID, setAdviceID] = useState("");
 
-  useEffect(function () {
-    async function getAdvice() {
-      setIsLoading(true);
-      try {
-        const res = await fetch(`https://api.adviceslip.com/advice`);
-        if (!res.ok)
-          throw new Error("Something went wrong getting your advice");
+  const [fetchAdvice, setFetchAdvice] = useState(false);
 
-        const data = await res.json();
+  useEffect(
+    function () {
+      async function getAdvice() {
+        setIsLoading(true);
+        try {
+          const res = await fetch(`https://api.adviceslip.com/advice`);
+          if (!res.ok)
+            throw new Error("Something went wrong getting your advice");
 
-        setIsLoading(false);
-        console.log(data);
-        setAdvice(data.slip.advice);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
+          const data = await res.json();
+
+          setIsLoading(false);
+
+          setAdvice(data.slip.advice);
+          setAdviceID(data.slip.id);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setIsLoading(false);
+        }
       }
-    }
-    getAdvice();
-  }, []);
+      getAdvice();
+    },
+    [fetchAdvice]
+  );
+
+  function handleFetchAdvice() {
+    setAdvice("");
+    setFetchAdvice(!fetchAdvice);
+
+    console.log("fetching data");
+  }
 
   return (
     <section className="advice-container">
-      <p className="container-heading">advice {}</p>
-      <Advice advice={advice} adviceID={adviceID} loading={isLoading} />
+      <p className="container-heading">advice #{adviceID}</p>
+      <Advice advice={advice} loading={isLoading} errorMessage={error} />
 
       <img src={screenWidth > 768 ? divider2 : divider1} alt="" />
 
-      <div className="dice-btn">
+      <div className="dice-btn" onClick={handleFetchAdvice}>
         <img src={dice} alt="dice pic" />
       </div>
     </section>
   );
 }
 
-function Advice({ advice, adviceID, loading }) {
+function Advice({ advice, loading, errorMessage }) {
   return (
     <p className="advice">
       <span>{"\u201C"}</span>
-      {loading ? "Getting advice..." : advice}
+      {loading && "Getting advice..."}
+
+      {!loading && advice}
+
+      {errorMessage ? errorMessage : advice}
       <span>{"\u201D"}</span>
     </p>
   );
