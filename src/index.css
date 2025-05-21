@@ -25,11 +25,50 @@ body {
   background: var(--blue-950);
 }
 
+.app-container {
+  width: 90svw;
+}
+
+.advice-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  background: var(--blue-900);
+}
+
+.container-heading {
+  color: var(--green);
+  text-transform: uppercase;
+  font-size: 15px;
+  text-align: center;
+}
+
 .advice {
   font-size: 30px;
   font-weight: 800;
+  color: white;
+  text-align: center;
 }
 
 .advice span {
   font-size: 28px;
+}
+
+.dice-btn {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  border-radius: 100%;
+  background: var(--green);
+  position: relative;
+  top: 4rem;
+  margin-top: -3rem;
 }

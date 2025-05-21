@@ -20,6 +20,12 @@ function AdviceContainer() {
     <section className="advice-container">
       <p className="container-heading">advice</p>
       <Advice />
+
+      <img src={divider1} alt="" />
+
+      <div className="dice-btn">
+        <img src={dice} alt="dice pic" />
+      </div>
     </section>
   );
 }
@@ -27,9 +33,9 @@ function AdviceContainer() {
 function Advice() {
   return (
     <p className="advice">
-      <span>"</span>
+      <span>{"\u201C"}</span>
       advice
-      <span>"</span>
+      <span>{"\u201D"}</span>
     </p>
   );
 }
