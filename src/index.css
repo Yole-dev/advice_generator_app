@@ -72,3 +72,10 @@ body {
   top: 4rem;
   margin-top: -3rem;
 }
+
+@media (min-width: 768px) {
+  .advice-container {
+    width: 40%;
+    justify-self: center;
+  }
+}
