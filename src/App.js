@@ -44,7 +44,7 @@ function AdviceContainer() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [advice, setAdvice] = useState("Click the dice below to get an advice");
+  const [advice, setAdvice] = useState("");
   const [adviceID, setAdviceID] = useState("");
 
   const [fetchTrigger, setFetchTrigger] = useState(false);
@@ -52,12 +52,13 @@ function AdviceContainer() {
   useEffect(
     function () {
       async function getAdvice() {
-        setIsLoading(true);
-        setError(null);
         try {
+          setIsLoading(true);
+          setError(null);
+
           const res = await fetch(`https://api.adviceslip.com/advice`);
-          if (!res.ok)
-            throw new Error("Something went wrong getting your advice");
+          console.log(res);
+          if (!res.ok) throw new Error("");
 
           const data = await res.json();
 
@@ -66,13 +67,12 @@ function AdviceContainer() {
           setAdvice(data.slip.advice);
           setAdviceID(`#${data.slip.id}`);
         } catch (err) {
-          if (err) {
-            setError(err.message);
-          }
+          setError(err.message);
         } finally {
           setIsLoading(false);
         }
       }
+
       getAdvice();
     },
     [fetchTrigger]
@@ -107,6 +107,9 @@ function Advice({ advice, loading, error }) {
       {loading && "Getting advice..."}
 
       {!loading && advice}
+
+      {error && error}
+
       <span>{"\u201D"}</span>
     </p>
   );
